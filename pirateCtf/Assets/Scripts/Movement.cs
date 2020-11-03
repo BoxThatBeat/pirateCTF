@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Mirror.Examples.Tanks
+namespace Mirror
 {
-    public class Tank : NetworkBehaviour
+    public class Movement : NetworkBehaviour
     {
         [Header("Components")]
         public NavMeshAgent agent;
-        public Animator animator;
 
         [Header("Movement")]
         public float rotationSpeed = 100;
@@ -62,7 +61,7 @@ namespace Mirror.Examples.Tanks
             float vertical = Input.GetAxis("Vertical");
             Vector3 forward = transform.TransformDirection(Vector3.forward);
             agent.velocity = forward * Mathf.Max(vertical, 0) * agent.speed;
-            animator.SetBool("Moving", agent.velocity != Vector3.zero);
+            //animator.SetBool("Moving", agent.velocity != Vector3.zero);
 
             // shoot
             if (Input.GetKeyDown(shootKey))
@@ -85,7 +84,7 @@ namespace Mirror.Examples.Tanks
         [ClientRpc]
         void RpcOnFire()
         {
-            animator.SetTrigger("Shoot");
+            //animator.SetTrigger("Shoot");
         }
 
         public void SendReadyToServer(string playername)

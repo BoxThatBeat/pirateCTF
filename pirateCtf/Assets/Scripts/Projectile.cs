@@ -1,49 +1,52 @@
 using UnityEngine;
 
-public class Projectile : NetworkBehaviour
+namespace Mirror
 {
-    public float destroyAfter = 1;
-    public Rigidbody rigidBody;
-    public float force = 1000;
-
-    [Header("Game Stats")]
-    public int damage;
-    public GameObject source;
-
-    public override void OnStartServer()
+    public class Projectile : NetworkBehaviour
     {
-        Invoke(nameof(DestroySelf), destroyAfter);
-    }
+        public float destroyAfter = 1;
+        public Rigidbody rigidBody;
+        public float force = 1000;
 
-    // set velocity for server and client. this way we don't have to sync the
-    // position, because both the server and the client simulate it.
-    void Start()
-    {
-        rigidBody.AddForce(transform.forward * force);
-    }
+        [Header("Game Stats")]
+        public int damage;
+        public GameObject source;
 
-    // destroy for everyone on the server
-    [Server]
-    void DestroySelf()
-    {
-        NetworkServer.Destroy(gameObject);
-    }
-
-    // ServerCallback because we don't want a warning if OnTriggerEnter is
-    // called on the client
-    [ServerCallback]
-    void OnTriggerEnter(Collider co)
-    {
-        //Hit another player
-        if (co.tag.Equals("Player") && co.gameObject != source)
+        public override void OnStartServer()
         {
-            //Apply damage
-            co.GetComponent<Tank>().health -= damage;
-
-            //update score on source
-            source.GetComponent<Tank>().score += damage;
+            Invoke(nameof(DestroySelf), destroyAfter);
         }
 
-        NetworkServer.Destroy(gameObject);
+        // set velocity for server and client. this way we don't have to sync the
+        // position, because both the server and the client simulate it.
+        void Start()
+        {
+            rigidBody.AddForce(transform.forward * force);
+        }
+
+        // destroy for everyone on the server
+        [Server]
+        void DestroySelf()
+        {
+            NetworkServer.Destroy(gameObject);
+        }
+
+        // ServerCallback because we don't want a warning if OnTriggerEnter is
+        // called on the client
+        [ServerCallback]
+        void OnTriggerEnter(Collider co)
+        {
+            //Hit another player
+            if (co.tag.Equals("Player") && co.gameObject != source)
+            {
+                //Apply damage
+                co.GetComponent<Movement>().health -= damage;
+
+                //update score on source
+                source.GetComponent<Movement>().score += damage;
+            }
+
+            NetworkServer.Destroy(gameObject);
+        }
     }
 }

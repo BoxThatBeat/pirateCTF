@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Mirror.Examples.Tanks
+namespace Mirror
 {
-    public class TankGameManager : MonoBehaviour
+    public class PirateCtfGameManager : MonoBehaviour
     {
         public int MinimumPlayersForGame = 1;
 
-        public Tank LocalPlayer;
+        public Movement LocalPlayer;
         public GameObject StartPanel;
         public GameObject GameOverPanel;
         public GameObject HealthTextLabel;
@@ -19,7 +19,7 @@ namespace Mirror.Examples.Tanks
         public Text WinnerNameText;
         public bool IsGameReady;
         public bool IsGameOver;
-        public List<Tank> players = new List<Tank>();
+        public List<Movement> players = new List<Movement>();
 
         void Update()
         {
@@ -30,7 +30,7 @@ namespace Mirror.Examples.Tanks
 
                 if (LocalPlayer == null)
                 {
-                    FindLocalTank();
+                    FindLocalMovement();
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace Mirror.Examples.Tanks
                 //Look for connections that are not in the player list
                 foreach (KeyValuePair<uint, NetworkIdentity> kvp in NetworkIdentity.spawned)
                 {
-                    Tank comp = kvp.Value.GetComponent<Tank>();
+                    Movement comp = kvp.Value.GetComponent<Movement>();
 
                     //Add if new
                     if (comp != null && !players.Contains(comp))
@@ -78,9 +78,9 @@ namespace Mirror.Examples.Tanks
                 if (players.Count >= MinimumPlayersForGame)
                 {
                     bool AllReady = true;
-                    foreach (Tank tank in players)
+                    foreach (Movement Movement in players)
                     {
-                        if (!tank.isReady)
+                        if (!Movement.isReady)
                         {
                             AllReady = false;
                         }
@@ -88,7 +88,7 @@ namespace Mirror.Examples.Tanks
                     if (AllReady)
                     {
                         IsGameReady = true;
-                        AllowTankMovement();
+                        AllowMovementMovement();
 
                         //Update Local GUI:
                         StartPanel.SetActive(false);
@@ -109,14 +109,14 @@ namespace Mirror.Examples.Tanks
                 return;
 
             int alivePlayerCount = 0;
-            foreach (Tank tank in players)
+            foreach (Movement Movement in players)
             {
-                if (!tank.isDead)
+                if (!Movement.isDead)
                 {
                     alivePlayerCount++;
 
                     //If there is only 1 player left alive this will end up being their name
-                    WinnerNameText.text = tank.playerName;
+                    WinnerNameText.text = Movement.playerName;
                 }
             }
 
@@ -124,17 +124,17 @@ namespace Mirror.Examples.Tanks
             {
                 IsGameOver = true;
                 GameOverPanel.SetActive(true);
-                DisallowTankMovement();
+                DisallowMovementMovement();
             }
         }
 
-        void FindLocalTank()
+        void FindLocalMovement()
         {
             //Check to see if the player is loaded in yet
             if (ClientScene.localPlayer == null)
                 return;
 
-            LocalPlayer = ClientScene.localPlayer.GetComponent<Tank>();
+            LocalPlayer = ClientScene.localPlayer.GetComponent<Movement>();
         }
 
         void UpdateStats()
@@ -149,20 +149,20 @@ namespace Mirror.Examples.Tanks
         }
 
         //All players are ready and game has started. Allow players to move.
-        void AllowTankMovement()
+        void AllowMovementMovement()
         {
-            foreach (Tank tank in players)
+            foreach (Movement Movement in players)
             {
-                tank.allowMovement = true;
+                Movement.allowMovement = true;
             }
         }
 
         //Game is over. Prevent movement
-        void DisallowTankMovement()
+        void DisallowMovementMovement()
         {
-            foreach (Tank tank in players)
+            foreach (Movement Movement in players)
             {
-                tank.allowMovement = false;
+                Movement.allowMovement = false;
             }
         }
     }
