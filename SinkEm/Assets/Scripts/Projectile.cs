@@ -1,12 +1,17 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 
 namespace Mirror
 {
+    public enum Dir { left, right }
+
     public class Projectile : NetworkBehaviour
     {
         private Rigidbody rb;
         public float destroyAfter = 5;
         public float force = 1000;
+
+        public Dir direction;
 
         public override void OnStartServer()
         {
@@ -18,7 +23,10 @@ namespace Mirror
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * force);
+            if (direction == Dir.right)
+                rb.AddForce(-transform.right * force);
+            else
+                rb.AddForce(transform.right * force);
         }
 
         // destroy for everyone on the server

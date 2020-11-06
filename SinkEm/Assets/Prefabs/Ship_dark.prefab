@@ -195,6 +195,7 @@ MonoBehaviour:
   syncInterval: 0.1
   settings: {fileID: 11400000, guid: ca66697aba2750a4c8e56fbe60758138, type: 2}
   speed: 10
+  cannonReloadSpeed: 2
   projectilePrefab: {fileID: 8063704221569509942, guid: 018fc786a65f13743a9d2e54c08251d8, type: 3}
   projectileMountRight: {fileID: 1347291249485162409}
   projectileMountLeft: {fileID: 2086249409826665076}
@@ -240,13 +241,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 293309367462654035}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 2000
+  m_Drag: 0.1
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 36
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!65 &3664902203270359652
 BoxCollider:
@@ -261,36 +262,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 28.50196, y: 65.45872, z: 80.97566}
   m_Center: {x: 0, y: 32.72936, z: -8.008659}
---- !u!1 &304587293752465325
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 492413207156991445}
-  m_Layer: 0
-  m_Name: LeftBallSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &492413207156991445
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304587293752465325}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 4.6, z: -1.24}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2841515084699393773}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &648768836267508666
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,7 +541,6 @@ Transform:
   - {fileID: 6839684022493468194}
   - {fileID: 2475772310936486039}
   - {fileID: 1799769917904562733}
-  - {fileID: 492413207156991445}
   m_Father: {fileID: 1106157060121668329}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -658,7 +628,6 @@ Transform:
   - {fileID: 9132595842731827634}
   - {fileID: 3534381766890177941}
   - {fileID: 5059853742456938324}
-  - {fileID: 6630774272285318376}
   m_Father: {fileID: 1106157060121668329}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1121,36 +1090,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &4214072404620605528
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6630774272285318376}
-  m_Layer: 0
-  m_Name: RightBallSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6630774272285318376
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4214072404620605528}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 5.03, z: -1.45}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4447028393884667069}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &5227860076103150662
 GameObject:
   m_ObjectHideFlags: 0
